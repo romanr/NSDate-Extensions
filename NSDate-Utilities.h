@@ -24,6 +24,10 @@
 + (NSDate *) dateWithMinutesFromNow: (NSUInteger) dMinutes;
 + (NSDate *) dateWithMinutesBeforeNow: (NSUInteger) dMinutes;
 
+//Custom
+//UTC
+- (NSDate*) asUTC;
+
 // Comparing dates
 - (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;
 - (BOOL) isToday;

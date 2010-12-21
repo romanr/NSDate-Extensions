@@ -71,6 +71,21 @@
 	return newDate;		
 }
 
+#pragma mark -
+#pragma mark get UTC Date
+- (NSDate*) asUTC
+{
+    NSTimeZone* currentTimeZone = [NSTimeZone localTimeZone];
+    NSTimeZone* utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+	
+    NSInteger currentGMTOffset = [currentTimeZone secondsFromGMTForDate:self];
+    NSInteger gmtOffset = [utcTimeZone secondsFromGMTForDate:self];
+    NSTimeInterval gmtInterval = gmtOffset - currentGMTOffset;
+	
+    NSDate* destinationDate = [[[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:self] autorelease];     
+    return destinationDate;
+}
+
 #pragma mark Comparing Dates
 
 - (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate
