@@ -12,7 +12,7 @@
 
 #import "NSDate-Utilities.h"
 
-#define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
+#define DATE_COMPONENTS (NSTimeZoneCalendarUnit| NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
 #define CURRENT_CALENDAR [NSCalendar currentCalendar]
 
 @implementation NSDate (Utilities)
@@ -69,6 +69,21 @@
 	NSTimeInterval aTimeInterval = [[NSDate date] timeIntervalSinceReferenceDate] - D_MINUTE * dMinutes;
 	NSDate *newDate = [NSDate dateWithTimeIntervalSinceReferenceDate:aTimeInterval];
 	return newDate;		
+}
+
+#pragma mark -
+#pragma mark get UTC Date
+- (NSDate*) asUTC
+{
+    NSTimeZone* currentTimeZone = [NSTimeZone localTimeZone];
+    NSTimeZone* utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+	
+    NSInteger currentGMTOffset = [currentTimeZone secondsFromGMTForDate:self];
+    NSInteger gmtOffset = [utcTimeZone secondsFromGMTForDate:self];
+    NSTimeInterval gmtInterval = gmtOffset - currentGMTOffset;
+	
+    NSDate* destinationDate = [[[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:self] autorelease];     
+    return destinationDate;
 }
 
 #pragma mark Comparing Dates
