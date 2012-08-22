@@ -82,7 +82,7 @@
     NSInteger gmtOffset = [utcTimeZone secondsFromGMTForDate:self];
     NSTimeInterval gmtInterval = gmtOffset - currentGMTOffset;
 	
-    NSDate* destinationDate = [[[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:self] autorelease];     
+    NSDate* destinationDate = [[NSDate alloc] initWithTimeInterval:gmtInterval sinceDate:self];     
     return destinationDate;
 }
 
