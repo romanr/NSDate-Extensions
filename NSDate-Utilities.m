@@ -90,11 +90,18 @@
 
 - (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate
 {
+
 	NSDateComponents *components1 = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:self];
 	NSDateComponents *components2 = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:aDate];
-	return ((components1.year == components2.year) &&
+	
+	if ((components1.year == components2.year) &&
 			(components1.month == components2.month) && 
-			(components1.day == components2.day));
+		(components1.day == components2.day)){
+		return YES;
+	} else {
+		return NO;
+	}
+	
 }
 
 - (BOOL) isToday
